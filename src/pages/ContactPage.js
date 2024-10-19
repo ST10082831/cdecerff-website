@@ -2,10 +2,11 @@ import React, { useRef, useState } from 'react';
 import { Container, Typography, Grid, TextField, Button, Box } from '@mui/material';
 import { styled } from '@mui/system';
 import emailjs from 'emailjs-com';
-import backgroundImage from '../assets/books-background.jpg';  // Ensure this path is correct
+import backgroundImage from '../assets/books-background.jpg';  // Background image import
 
+// Hero Section with background image
 const HeroSection = styled(Box)({
-  backgroundImage: `url(${backgroundImage})`, // Ensure this is correctly referencing your image
+  backgroundImage: `url(${backgroundImage})`,  // Apply background image
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   color: '#fff',
@@ -15,62 +16,66 @@ const HeroSection = styled(Box)({
   alignItems: 'center',
   justifyContent: 'center',
   '&::before': {
-    content: '""',
+    content: '""',  // Dark overlay on image for better readability
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', // Dark overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',  // Overlay for darkening the background
     zIndex: 1,
   },
 });
 
+// Content overlay to ensure text is readable over the background
 const ContentOverlay = styled(Container)({
   position: 'relative',
   zIndex: 2,
   textAlign: 'center',
 });
 
+// Styling for the contact form
 const ContactForm = styled(Box)(({ theme }) => ({
-  backgroundColor: '#fff',
+  backgroundColor: '#fff',  // White background for the form
   padding: theme.spacing(4),
-  borderRadius: '12px',
-  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.2)',
+  borderRadius: '12px',  // Rounded corners
+  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.2)',  // Slight shadow for depth
   maxWidth: '600px',
-  margin: '0 auto',
+  margin: '0 auto',  // Center the form
   marginTop: theme.spacing(-8),
 }));
 
+// Button styling
 const SubmitButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#1976d2',
-  color: '#fff',
+  backgroundColor: '#1976d2',  // Button color
+  color: '#fff',  // White text
   '&:hover': {
-    backgroundColor: '#1565c0',
+    backgroundColor: '#1565c0',  // Darken button on hover
   },
 }));
 
 function ContactPage() {
-  const form = useRef();
-  const [loading, setLoading] = useState(false);
+  const form = useRef();  // Ref for the form
+  const [loading, setLoading] = useState(false);  // Loading state
 
+  // Function to handle form submission
   const sendEmail = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true);  // Set loading state
 
     emailjs
       .sendForm('service_ply40cd', 'template_n0qpds8', form.current, 'MpVQnpPTIwt0f4Ci_')
       .then(
         () => {
-          alert('Your message has been sent successfully. We will contact you shortly.');
-          e.target.reset();
+          alert('Your message has been sent successfully.');  // Success message
+          e.target.reset();  // Reset form fields
         },
         () => {
-          alert('An error occurred. Please try again later.');
+          alert('An error occurred. Please try again later.');  // Error message
         }
       )
       .finally(() => {
-        setLoading(false);
+        setLoading(false);  // End loading state
       });
   };
 
@@ -101,7 +106,7 @@ function ContactPage() {
               name="name"
               label="Your Name"
               variant="outlined"
-              InputProps={{ style: { backgroundColor: '#fff' } }}
+              InputProps={{ style: { backgroundColor: '#fff' } }}  // Input field styling
             />
           </Grid>
           <Grid item xs={12}>
@@ -112,7 +117,7 @@ function ContactPage() {
               label="Your Email"
               type="email"
               variant="outlined"
-              InputProps={{ style: { backgroundColor: '#fff' } }}
+              InputProps={{ style: { backgroundColor: '#fff' } }}  // Input field styling
             />
           </Grid>
           <Grid item xs={12}>
@@ -124,7 +129,7 @@ function ContactPage() {
               variant="outlined"
               multiline
               rows={4}
-              InputProps={{ style: { backgroundColor: '#fff' } }}
+              InputProps={{ style: { backgroundColor: '#fff' } }}  // Input field styling
             />
           </Grid>
           <Grid item xs={12}>
@@ -132,7 +137,7 @@ function ContactPage() {
               variant="contained"
               size="large"
               type="submit"
-              disabled={loading}
+              disabled={loading}  // Disable button if form is loading
               fullWidth
             >
               {loading ? 'Sending...' : 'Submit'}
@@ -145,4 +150,5 @@ function ContactPage() {
 }
 
 export default ContactPage;
+
 

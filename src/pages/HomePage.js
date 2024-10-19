@@ -2,81 +2,78 @@ import React, { useRef, useState } from 'react';
 import { Container, Box, Typography, Button, Grid, TextField } from '@mui/material';
 import emailjs from 'emailjs-com';
 import { styled } from '@mui/system';
-import backGroundImage from '../assets/books-background.jpg';
+import backGroundImage from '../assets/books-background.jpg';  // Background image import
 
-// Styled Hero Section with a Background Image and Overlay
+// Styled Hero Section with Background Image and Overlay
 const HeroSection = styled(Box)({
-  backgroundImage: `url(${backGroundImage})`,
+  backgroundImage: `url(${backGroundImage})`,  // Set background image
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   color: '#fff',
   position: 'relative',
-  minHeight: '100vh',
+  minHeight: '100vh',  // Full screen height
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  '&::before': {
+  '&::before': {  // Dark overlay for better readability
     content: '""',
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)', 
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',  // Dark overlay
     zIndex: 1,
   },
 });
 
-// Content Overlay to ensure text appears on top of the background
+// Content overlay for hero section
 const ContentOverlay = styled(Container)({
   position: 'relative',
-  zIndex: 2, // Ensures the content is above the overlay
+  zIndex: 2,  // Ensure content appears above overlay
   display: 'flex',
   alignItems: 'center',
 });
 
 // Styled Contact Form
 const ContactForm = styled(Box)(({ theme }) => ({
-  backgroundColor: '#fff',
+  backgroundColor: '#fff',  // White form background
   padding: theme.spacing(4),
-  borderRadius: '12px',
-  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.2)',
+  borderRadius: '12px',  // Rounded corners
+  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.2)',  // Shadow effect for depth
   maxWidth: '400px',
   width: '100%',
-  textAlign: 'center',
+  textAlign: 'center',  // Center-align form text
 }));
 
-// Submit Button Styling
+// Button styling for form submission
 const SubmitButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#1976d2',
+  backgroundColor: '#1976d2',  // Button color
   color: '#fff',
-  '&:hover': {
-    backgroundColor: '#1565c0',
-  },
+  '&:hover': { backgroundColor: '#1565c0' },  // Hover effect
 }));
 
 function HomePage() {
-  const form = useRef();
-  const [loading, setLoading] = useState(false);
+  const form = useRef();  // Form reference
+  const [loading, setLoading] = useState(false);  // Loading state for form submission
 
+  // Function to send email on form submission
   const sendEmail = (e) => {
     e.preventDefault();
-    setLoading(true);
+    setLoading(true);  // Show loading
 
     emailjs
       .sendForm('service_ply40cd', 'template_n0qpds8', form.current, 'MpVQnpPTIwt0f4Ci_')
       .then(
-        (result) => {
+        () => {
           alert('Your message has been sent successfully. We will contact you shortly.');
-          e.target.reset(); // Reset form fields after submission
+          e.target.reset();  // Reset form fields after submission
         },
-        (error) => {
+        () => {
           alert('An error occurred. Please try again later.');
         }
       )
-      .finally(() => {
-        setLoading(false);
-      });
+      .finally(() => setLoading(false));  // Hide loading
   };
 
   return (
@@ -94,9 +91,7 @@ function HomePage() {
                 Professional legal services since 1996.
               </Typography>
               <Typography variant="body1" component="p" sx={{ color: '#ccc', mt: 2 }}>
-                At C. DE CERFF & ASSOCIATES, we specialize in delivering personalized legal services in the areas of litigation,
-                corporate law, family law, and conveyancing. Our experienced team is committed to upholding the highest
-                standards of justice and trust for every client.
+                At C. DE CERFF & ASSOCIATES, we specialize in personalized legal services in litigation, corporate law, family law, and conveyancing.
               </Typography>
             </Grid>
 
@@ -114,7 +109,7 @@ function HomePage() {
                       name="name"
                       label="Your Name"
                       variant="outlined"
-                      InputProps={{ style: { backgroundColor: '#fff' } }}
+                      InputProps={{ style: { backgroundColor: '#fff' } }}  // Input styling
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -125,7 +120,7 @@ function HomePage() {
                       label="Your Email"
                       type="email"
                       variant="outlined"
-                      InputProps={{ style: { backgroundColor: '#fff' } }}
+                      InputProps={{ style: { backgroundColor: '#fff' } }}  // Input styling
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -136,8 +131,8 @@ function HomePage() {
                       label="Your Message"
                       variant="outlined"
                       multiline
-                      rows={4}
-                      InputProps={{ style: { backgroundColor: '#fff' } }}
+                      rows={4}  // Multiline input for message
+                      InputProps={{ style: { backgroundColor: '#fff' } }}  // Input styling
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -145,10 +140,10 @@ function HomePage() {
                       variant="contained"
                       size="large"
                       type="submit"
-                      disabled={loading}
+                      disabled={loading}  // Disable button if loading
                       fullWidth
                     >
-                      {loading ? 'Sending...' : 'Submit'}
+                      {loading ? 'Sending...' : 'Submit'}  {/*Button text changes based on loading state*/}
                     </SubmitButton>
                   </Grid>
                 </Grid>
@@ -162,3 +157,4 @@ function HomePage() {
 }
 
 export default HomePage;
+
