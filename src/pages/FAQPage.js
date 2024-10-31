@@ -2,69 +2,52 @@ import React from 'react';
 import { Container, Typography, Accordion, AccordionSummary, AccordionDetails, Box } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/system';
-import faqItems from '../faqdata';  // Importing FAQ data
-import backgroundImage from '../assets/books-background.jpg';  // Background image import
 
-// Hero Section with background image
-const HeroSection = styled(Box)({
-  backgroundImage: `url(${backgroundImage})`,  // Setting background image
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
+// Hardcoded FAQ Data
+const faqItems = [
+  {
+    question: "What services does C. DE CERFF & ASSOCIATES offer?",
+    answer: "We offer a wide range of legal services including litigation, corporate law, family law, and conveyancing."
+  },
+  {
+    question: "How can I schedule a consultation?",
+    answer: "You can schedule a consultation by contacting us through the form on the homepage or calling our office directly."
+  },
+  {
+    question: "Do you handle cases across South Africa?",
+    answer: "Yes, we provide legal services to clients throughout South Africa."
+  },
+  {
+    question: "What is the best way to get in touch with a lawyer?",
+    answer: "For immediate assistance, please use our contact form, and we’ll connect you with the appropriate lawyer based on your case."
+  },
+];
+
+// Styled Components for Consistent Design
+const HeroSection = styled(Box)(({ theme }) => ({
+  backgroundColor: '#a04722',
   color: '#fff',
   position: 'relative',
-  minHeight: '50vh',
+  minHeight: '40vh',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  '&::before': {
-    content: '""',  // Dark overlay for better text visibility
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',  // Transparent black overlay
-    zIndex: 1,
-  },
-});
+}));
 
-// Content overlay for hero section
 const ContentOverlay = styled(Container)({
   position: 'relative',
-  zIndex: 2,  // Ensure text appears above the overlay
+  zIndex: 2,
   textAlign: 'center',
+  padding: '20px',
   color: '#fff',
 });
 
-// Section styling for the FAQ content
-const Section = styled(Container)(({ theme }) => ({
-  padding: theme.spacing(8, 0),  // Padding for spacing
-  textAlign: 'center',
-}));
-
-// Styling for Accordion (FAQ item)
+// Accordion styling
 const StyledAccordion = styled(Accordion)(({ theme }) => ({
-  margin: theme.spacing(2, 0),  // Spacing between accordions
-  borderRadius: '8px',  // Rounded corners
-  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.1)',  // Slight shadow for depth
+  margin: theme.spacing(2, 0),
+  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.1)',
   '&:before': { display: 'none' },
   '&.Mui-expanded': { margin: theme.spacing(2, 0) },
-}));
-
-// Accordion summary style (collapsed state)
-const StyledAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
-  backgroundColor: '#1e3d59',  // Primary color
-  color: '#fff',
-  padding: theme.spacing(2),
-  borderRadius: '8px',
-}));
-
-// Accordion details style (expanded state)
-const StyledAccordionDetails = styled(AccordionDetails)(({ theme }) => ({
-  backgroundColor: '#f5f5f5',  // Light gray background
-  padding: theme.spacing(3),  // Spacing within details section
-  borderRadius: '8px',
-  color: '#333',  // Dark text color
 }));
 
 function FAQPage() {
@@ -73,31 +56,40 @@ function FAQPage() {
       {/* Hero Section */}
       <HeroSection>
         <ContentOverlay maxWidth="md">
-          <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
+          <Typography variant="h3" component="h1" gutterBottom>
             Frequently Asked Questions
           </Typography>
-          <Typography variant="h5" component="p">
+          <Typography variant="h6">
             Find answers to the most common questions about our legal services.
           </Typography>
         </ContentOverlay>
       </HeroSection>
 
       {/* FAQ Section */}
-      <Section>
-        <Typography variant="h4" gutterBottom sx={{ color: '#1e3d59', fontWeight: 'bold' }}>
+      <Container sx={{ py: 8 }}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ color: '#a04722', fontWeight: 'bold', mt: 2, mb: 4 }}
+        >
           How Can We Help You?
         </Typography>
+        
         {faqItems.map((faq, index) => (
           <StyledAccordion key={index}>
-            <StyledAccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: '#ffc107' }} />}>
-              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>{faq.question}</Typography>
-            </StyledAccordionSummary>
-            <StyledAccordionDetails>
-              <Typography>{faq.answer}</Typography>
-            </StyledAccordionDetails>
+            <AccordionSummary expandIcon={<ExpandMoreIcon sx={{ color: '#a04722' }} />}>
+              <Typography variant="h6" sx={{ fontWeight: 'bold' }}>
+                {faq.question}
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <Typography variant="body1" sx={{ lineHeight: 1.8 }}>
+                {faq.answer}
+              </Typography>
+            </AccordionDetails>
           </StyledAccordion>
         ))}
-      </Section>
+      </Container>
     </div>
   );
 }

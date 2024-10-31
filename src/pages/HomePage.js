@@ -1,160 +1,138 @@
-import React, { useRef, useState } from 'react';
-import { Container, Box, Typography, Button, Grid, TextField } from '@mui/material';
-import emailjs from 'emailjs-com';
+import React from 'react';
+import { Container, Box, Typography, Grid, Button, Card, CardContent, CardMedia } from '@mui/material';
 import { styled } from '@mui/system';
-import backGroundImage from '../assets/books-background.jpg';  // Background image import
+import { Link as RouterLink } from 'react-router-dom';
+import { colors } from '../theme'; 
+import { services } from '../services'; 
+import teamImage from '../assets/books-background.jpg'; 
 
 // Styled Hero Section with Background Image and Overlay
-const HeroSection = styled(Box)({
-  backgroundImage: `url(${backGroundImage})`,  // Set background image
+const HeroSection = styled(Box)(({ theme }) => ({
+  backgroundImage: `url(${teamImage})`, // Use background image
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   color: '#fff',
   position: 'relative',
-  minHeight: '100vh',  // Full screen height
+  minHeight: '70vh',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  '&::before': {  // Dark overlay for better readability
+  '&::before': {
     content: '""',
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',  // Dark overlay
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     zIndex: 1,
   },
-});
+}));
 
 // Content overlay for hero section
 const ContentOverlay = styled(Container)({
   position: 'relative',
-  zIndex: 2,  // Ensure content appears above overlay
-  display: 'flex',
-  alignItems: 'center',
+  zIndex: 2,
+  textAlign: 'center',
 });
 
-// Styled Contact Form
-const ContactForm = styled(Box)(({ theme }) => ({
-  backgroundColor: '#fff',  // White form background
-  padding: theme.spacing(4),
-  borderRadius: '12px',  // Rounded corners
-  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.2)',  // Shadow effect for depth
-  maxWidth: '400px',
-  width: '100%',
-  textAlign: 'center',  // Center-align form text
-}));
-
-// Button styling for form submission
-const SubmitButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#1976d2',  // Button color
+// Button styling
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: colors.primary,
   color: '#fff',
-  '&:hover': { backgroundColor: '#1565c0' },  // Hover effect
+  '&:hover': { backgroundColor: '#8a3f1e' },
+  marginTop: theme.spacing(2),
 }));
 
 function HomePage() {
-  const form = useRef();  // Form reference
-  const [loading, setLoading] = useState(false);  // Loading state for form submission
-
-  // Function to send email on form submission
-  const sendEmail = (e) => {
-    e.preventDefault();
-    setLoading(true);  // Show loading
-
-    emailjs
-      .sendForm('service_ply40cd', 'template_n0qpds8', form.current, 'MpVQnpPTIwt0f4Ci_')
-      .then(
-        () => {
-          alert('Your message has been sent successfully. We will contact you shortly.');
-          e.target.reset();  // Reset form fields after submission
-        },
-        () => {
-          alert('An error occurred. Please try again later.');
-        }
-      )
-      .finally(() => setLoading(false));  // Hide loading
-  };
-
   return (
     <div>
-      {/* Hero Section with Background and Overlay */}
+      {/* Hero Section */}
       <HeroSection>
-        <ContentOverlay maxWidth="lg">
-          <Grid container spacing={4}>
-            {/* Left Side - Informational Text */}
-            <Grid item xs={12} md={6}>
-              <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: '#fff' }}>
-                Justice. Integrity. Trust.
-              </Typography>
-              <Typography variant="h5" component="p" gutterBottom sx={{ color: '#ddd' }}>
-                Professional legal services since 1996.
-              </Typography>
-              <Typography variant="body1" component="p" sx={{ color: '#ccc', mt: 2 }}>
-                At C. DE CERFF & ASSOCIATES, we specialize in personalized legal services in litigation, corporate law, family law, and conveyancing.
-              </Typography>
-            </Grid>
-
-            {/* Right Side - Contact Form */}
-            <Grid item xs={12} md={6}>
-              <ContactForm component="form" ref={form} onSubmit={sendEmail}>
-                <Typography variant="h6" gutterBottom sx={{ color: '#1976d2', fontWeight: 'bold' }}>
-                  Get a Free Consultation
-                </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="name"
-                      label="Your Name"
-                      variant="outlined"
-                      InputProps={{ style: { backgroundColor: '#fff' } }}  // Input styling
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="email"
-                      label="Your Email"
-                      type="email"
-                      variant="outlined"
-                      InputProps={{ style: { backgroundColor: '#fff' } }}  // Input styling
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="message"
-                      label="Your Message"
-                      variant="outlined"
-                      multiline
-                      rows={4}  // Multiline input for message
-                      InputProps={{ style: { backgroundColor: '#fff' } }}  // Input styling
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <SubmitButton
-                      variant="contained"
-                      size="large"
-                      type="submit"
-                      disabled={loading}  // Disable button if loading
-                      fullWidth
-                    >
-                      {loading ? 'Sending...' : 'Submit'}  {/*Button text changes based on loading state*/}
-                    </SubmitButton>
-                  </Grid>
-                </Grid>
-              </ContactForm>
-            </Grid>
-          </Grid>
+        <ContentOverlay maxWidth="md">
+          <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
+            C. DE CERFF & ASSOCIATES
+          </Typography>
+          <Typography variant="h5" component="p" gutterBottom>
+            Professional Legal Services Since 1996
+          </Typography>
+          <Typography variant="body1" component="p" sx={{ mt: 2 }}>
+            Committed to providing exceptional legal solutions with integrity and excellence.
+          </Typography>
+          <StyledButton variant="contained" size="large" component={RouterLink} to="/contact">
+            Contact us
+          </StyledButton>
         </ContentOverlay>
       </HeroSection>
+
+      {/* Introduction Section */}
+      <Container sx={{ py: 8 }}>
+        <Typography variant="h4" gutterBottom sx={{ color: colors.primary, fontWeight: 'bold' }}>
+          Welcome to C. DE CERFF & ASSOCIATES
+        </Typography>
+        <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
+          With over two decades of experience, our firm offers a comprehensive range of legal services tailored to meet the unique needs of our clients. Our dedicated team of attorneys specializes in litigation, corporate law, family law, and conveyancing. We are passionate about delivering personalized solutions with professionalism and care.
+        </Typography>
+      </Container>
+
+      {/* Services Overview Section */}
+      <Box sx={{ backgroundColor: '#f9f9f9', py: 8 }}>
+        <Container>
+          <Typography variant="h4" gutterBottom sx={{ color: colors.primary, fontWeight: 'bold' }}>
+            Our Services
+          </Typography>
+          <Grid container spacing={4}>
+            {services.slice(0, 3).map((service) => (
+              <Grid item xs={12} md={4} key={service.slug}>
+                <Card sx={{ height: '100%' }}>
+                  <CardMedia component="img" height="140" image={service.image} alt={service.title} />
+                  <CardContent>
+                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 'bold' }}>
+                      {service.title}
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary">
+                      {service.description}
+                    </Typography>
+                    <Button
+                      variant="text"
+                      component={RouterLink}
+                      to={`/services/${service.slug}`}
+                      sx={{ mt: 2, color: colors.primary }}
+                    >
+                      Learn More
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+          <Box sx={{ textAlign: 'center', mt: 4 }}>
+            <StyledButton variant="contained" component={RouterLink} to="/services">
+              View All Services
+            </StyledButton>
+          </Box>
+        </Container>
+      </Box>
+
+      {/* Call-to-Action Section */}
+      <Box sx={{ backgroundColor: colors.primary, color: '#fff', py: 8 }}>
+        <Container>
+          <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold' }}>
+            Ready to Discuss Your Legal Needs?
+          </Typography>
+          <Typography variant="body1" paragraph sx={{ lineHeight: 1.8 }}>
+            Contact us today to schedule a consultation with one of our experienced attorneys. We are here to provide the legal support you need.
+          </Typography>
+          <StyledButton variant="contained" component={RouterLink} to="/contact">
+            Contact Us
+          </StyledButton>
+        </Container>
+      </Box>
     </div>
   );
 }
 
 export default HomePage;
+
+
 

@@ -1,159 +1,117 @@
 import React from 'react';
-import { Container, Grid, Typography, Box, Divider, Button } from '@mui/material';
+import { Container, Typography, Box, Grid, Divider } from '@mui/material';
 import { styled } from '@mui/system';
-import backgroundImage from '../assets/books-background.jpg';  // Importing background image
+import teamImage from '../assets/books-background.jpg'; 
+import { colors } from '../theme'; 
 
-// Defining color palette
-const colors = {
-  primary: '#1e3d59',  // Dark blue
-  accent: '#ffc107',   // Yellow accent
-};
-
-// Hero section with background image
-const HeroSection = styled(Box)({
-  backgroundImage: `url(${backgroundImage})`,
+// Styled components
+const HeroSection = styled(Box)(({ theme }) => ({
+  backgroundImage: `url(${teamImage})`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  color: '#fff',
+  color: '#ffffff',
   position: 'relative',
-  minHeight: '60vh',
+  minHeight: '50vh',
   display: 'flex',
   alignItems: 'center',
-  '&::before': {  // Dark overlay on the image
+  justifyContent: 'center',
+  '&::before': {
     content: '""',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     position: 'absolute',
     top: 0,
-    left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',  // Dark transparent overlay
-    zIndex: 1,
+    left: 0,
   },
-});
+}));
 
-// Content inside hero section
-const ContentOverlay = styled(Container)({
+const ContentOverlay = styled(Box)(({ theme }) => ({
   position: 'relative',
-  zIndex: 2,  // Make sure content is above the overlay
-  textAlign: 'center',  // Center-align text
-});
-
-// Reusable section style
-const Section = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(8, 0),  // Padding for spacing
+  zIndex: 2,
+  textAlign: 'center',
+  padding: theme.spacing(4),
 }));
 
-// Box around text content with some transparency
-const TextBox = styled(Box)(({ theme }) => ({
-  backgroundColor: 'rgba(255, 255, 255, 0.85)',  // White background with transparency
-  padding: theme.spacing(4),  // Padding inside the box
-  borderRadius: '12px',  // Rounded corners
-  boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.1)',  // Shadow effect for depth
-  marginTop: theme.spacing(4),  // Spacing above the box
-}));
-
-// Button styling
-const CallToActionButton = styled(Button)(({ theme }) => ({
-  marginTop: theme.spacing(4),
-  backgroundColor: colors.accent,  // Yellow button
-  color: colors.primary,  // Dark blue text
-  fontWeight: 'bold',
-  '&:hover': {  // Hover effect
-    backgroundColor: '#e0a800',
-  },
-}));
-
-function AboutUsPage() {
+function AboutPage() {
   return (
     <div>
       {/* Hero Section */}
       <HeroSection>
-        <ContentOverlay maxWidth="md">
-          <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
+        <ContentOverlay>
+          <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
             About Us
-          </Typography>
-          <Typography variant="h5" component="p">
-            Committed to Excellence Since 1996
           </Typography>
         </ContentOverlay>
       </HeroSection>
 
       {/* Main Content */}
-      <Section>
-        <Container>
-          <Grid container spacing={6}>
-            {/* Left Column: Text Content */}
-            <Grid item xs={12} md={8}>
-              <TextBox>
-                <Typography variant="h6" gutterBottom sx={{ color: '#333', lineHeight: 1.6 }}>
-                  Welcome to <strong>C. DE CERFF & ASSOCIATES</strong>, a law firm established in 1996. We specialize in Litigation, Corporate Law, Family Law, and Conveyancing.
-                </Typography>
+      <Container sx={{ py: 8 }}>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ color: colors.primary, fontWeight: 'bold', mt: 2 }}
+        >
+          Our Firm
+        </Typography>
+        <Divider sx={{ mb: 4 }} />
 
-                {/* Philosophy Section */}
-                <Typography variant="h5" gutterBottom sx={{ color: colors.primary, fontWeight: 'bold' }}>
-                  Our Philosophy
-                </Typography>
-                <Typography variant="body1" component="p" sx={{ color: '#555', mb: 2 }}>
-                  At C. DE CERFF & ASSOCIATES, we believe in providing excellent legal solutions with a focus on integrity and transparency. Our core values include:
-                </Typography>
-                <Typography variant="body1" component="ul" sx={{ pl: 2, color: colors.textSecondary }}>
-                  <li><strong>Excellence in Service:</strong> High-quality legal services.</li>
-                  <li><strong>Integrity in Dealings:</strong> Honesty and transparency in all actions.</li>
-                  <li><strong>Customer Satisfaction:</strong> Prioritizing client needs.</li>
-                  <li><strong>Efficiency in Processes:</strong> Timely legal solutions.</li>
-                  <li><strong>Client Confidentiality:</strong> Ensuring privacy for all clients.</li>
-                </Typography>
+        <Typography variant="body1" paragraph sx={{ mt: 2, lineHeight: 1.8 }}>
+          Established in 1996, <strong>C. DE CERFF & ASSOCIATES</strong> has been providing
+          exceptional legal services to individuals, families, and businesses across South Africa.
+          With over two decades of experience, our firm prides itself on delivering personalized
+          solutions tailored to the unique needs of each client.
+        </Typography>
 
-                <Divider sx={{ my: 3 }} />
+        <Typography variant="body1" paragraph sx={{ mt: 2, lineHeight: 1.8 }}>
+          Our team of dedicated attorneys specializes in various areas of law, including litigation,
+          corporate law, family law, and conveyancing. We are committed to upholding the highest
+          standards of integrity, professionalism, and excellence in all that we do.
+        </Typography>
 
-                {/* Mission Section */}
-                <Typography variant="h5" gutterBottom sx={{ color: colors.primary, fontWeight: 'bold' }}>
-                  Our Mission
-                </Typography>
-                <Typography variant="body1" component="p" sx={{ color: '#555', mb: 2 }}>
-                  To provide accessible and affordable legal services, especially for underprivileged communities.
-                </Typography>
+        <Typography variant="body1" paragraph sx={{ mt: 2, lineHeight: 1.8 }}>
+          At C. DE CERFF & ASSOCIATES, we believe in making a positive impact not only through our
+          legal work but also by contributing to the advancement of our society. As part of our
+          commitment to social responsibility, we actively support South Africa's{' '}
+          <strong>Broad-Based Black Economic Empowerment (B-BBEE)</strong> initiatives. We are
+          dedicated to promoting equality and transformation within the legal profession and the
+          broader business community.
+        </Typography>
 
-                <Divider sx={{ my: 3 }} />
+        <Typography variant="body1" paragraph sx={{ mt: 2, lineHeight: 1.8 }}>
+          Our firm embraces diversity and inclusivity, striving to create opportunities for
+          previously disadvantaged individuals. By aligning with B-BBEE principles, we aim to
+          contribute to sustainable economic growth and social development in South Africa.
+        </Typography>
 
-                {/* Approach Section */}
-                <Typography variant="h5" gutterBottom sx={{ color: colors.primary, fontWeight: 'bold' }}>
-                  Our Approach
-                </Typography>
-                <Typography variant="body1" component="p" sx={{ color: '#555', mb: 2 }}>
-                  We collaborate with clients to ensure their legal needs are met while protecting their rights.
-                </Typography>
-              </TextBox>
-            </Grid>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{ color: colors.primary, fontWeight: 'bold', mt: 6 }}
+        >
+          Our Mission & Vision
+        </Typography>
+        <Divider sx={{ mb: 4 }} />
 
-            {/* Right Column: Image */}
-            <Grid item xs={12} md={4}>
-              <Box
-                component="img"
-                src={backgroundImage}  // Image of the firm
-                alt="Law firm"
-                sx={{
-                  width: '100%',
-                  borderRadius: '12px',  // Rounded corners for image
-                  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.1)',  // Shadow effect
-                }}
-              />
-            </Grid>
-          </Grid>
+        <Typography variant="body1" paragraph sx={{ mt: 2, lineHeight: 1.8 }}>
+          <strong>Our Mission:</strong> To provide accessible and affordable legal services,
+          delivering exceptional results through dedication, innovation, and a client-centric
+          approach.
+        </Typography>
 
-          {/* Call to Action Button */}
-          <Box textAlign="center" sx={{ mt: 8 }}>
-            <CallToActionButton variant="contained" size="large" href="/contact">
-              Contact Us
-            </CallToActionButton>
-          </Box>
-        </Container>
-      </Section>
+        <Typography variant="body1" paragraph sx={{ mt: 2, lineHeight: 1.8 }}>
+          <strong>Our Vision:</strong> To be a leading law firm recognized for excellence,
+          integrity, and commitment to social responsibility, making a meaningful difference in the
+          lives of our clients and the community.
+        </Typography>
+      </Container>
     </div>
   );
 }
 
-export default AboutUsPage;
+export default AboutPage;
+
+
 
 
 

@@ -1,65 +1,120 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Assuming you're using React Router for navigation
-import { AppBar, Toolbar, Button, Box } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { AppBar, Toolbar, Button, Box, IconButton, Drawer, List, ListItem, ListItemText } from '@mui/material';
 import { styled } from '@mui/system';
-import logo from '../assets/logo.png';  // Path to your logo
+import MenuIcon from '@mui/icons-material/Menu';
+import logo from '../assets/logo.png';
 
-// Styled Box for the logo
-const LogoContainer = styled(Box)({
+const HeaderContainer = styled(AppBar)(({ theme }) => ({
+  backgroundColor: '#a04722', // Existing primary color
+  boxShadow: 'none',
+  position: 'sticky',
+}));
+
+const Logo = styled('img')(({ theme }) => ({
+  height: '50px',
+  [theme.breakpoints.down('sm')]: {
+    height: '40px',
+  },
+}));
+
+const NavLinks = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-});
+  marginLeft: 'auto',
+  [theme.breakpoints.down('md')]: {
+    display: 'none',
+  },
+}));
 
-// Styled Button for consistent styling
 const NavButton = styled(Button)(({ theme }) => ({
-  color: '#fff', // White text
-  marginRight: theme.spacing(2),
+  color: '#FFFFFF',
+  fontWeight: 'bold',
+  marginLeft: theme.spacing(2),
   '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.1)', // Subtle hover effect
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+  },
+}));
+
+const MobileMenuButton = styled(IconButton)(({ theme }) => ({
+  color: '#FFFFFF',
+  marginLeft: 'auto',
+  [theme.breakpoints.up('md')]: {
+    display: 'none',
   },
 }));
 
 function Header() {
-  return (
-    <AppBar position="static" sx={{ backgroundColor: '#1e3d59' }}>
-      <Toolbar sx={{ justifyContent: 'space-between' }}>
-        {/* Logo on the left */}
-        <LogoContainer>
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <Box
-              component="img"
-              src={logo}
-              alt="Law Firm Logo"
-              sx={{
-                width: { xs: '150px', sm: '200px', md: '250px' }, // Responsive logo size
-                height: 'auto',
-                cursor: 'pointer',
-              }}
-            />
-          </Link>
-        </LogoContainer>
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
 
-        {/* Navigation buttons on the right */}
-        <Box>
-          <NavButton component={Link} to="/">
-            Home
-          </NavButton>
-          <NavButton component={Link} to="/about">
-            About Us
-          </NavButton>
-          <NavButton component={Link} to="/services">
-            Services
-          </NavButton>
-          <NavButton component={Link} to="/faq">
-            FAQ
-          </NavButton>
-          <NavButton component={Link} to="/contact">
-            Contact Us
-          </NavButton>
+  const handleDrawerToggle = () => {
+    setDrawerOpen(!drawerOpen);
+  };
+
+  return (
+    <>
+      <HeaderContainer>
+        <Toolbar>
+          {/* Logo */}
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Logo src={logo} alt="C. DE CERFF & ASSOCIATES" />
+          </Link>
+
+          {/* Desktop Navigation */}
+          <NavLinks>
+            <NavButton component={Link} to="/">
+              Home
+            </NavButton>
+            <NavButton component={Link} to="/about">
+              About Us
+            </NavButton>
+            <NavButton component={Link} to="/services">
+              Services
+            </NavButton>
+            <NavButton component={Link} to="/ourlawyers">
+              Our Lawyers
+            </NavButton>
+            <NavButton component={Link} to="/faq">
+              FAQ
+            </NavButton>
+            <NavButton component={Link} to="/contact">
+              Contact
+            </NavButton>
+          </NavLinks>
+
+          {/* Mobile Menu Button */}
+          <MobileMenuButton edge="end" onClick={handleDrawerToggle}>
+            <MenuIcon />
+          </MobileMenuButton>
+        </Toolbar>
+      </HeaderContainer>
+
+      {/* Mobile Navigation Drawer */}
+      <Drawer anchor="right" open={drawerOpen} onClose={handleDrawerToggle}>
+        <Box sx={{ width: 250 }} role="presentation" onClick={handleDrawerToggle}>
+          <List>
+            <ListItem button component={Link} to="/">
+              <ListItemText primary="Home" />
+            </ListItem>
+            <ListItem button component={Link} to="/about">
+              <ListItemText primary="About Us" />
+            </ListItem>
+            <ListItem button component={Link} to="/services">
+              <ListItemText primary="Services" />
+            </ListItem>
+            <ListItem button component={Link} to="/ourlawyers">
+              <ListItemText primary="Our Lawyers" />
+            </ListItem>
+            <ListItem button component={Link} to="/faq">
+              <ListItemText primary="FAQ" />
+            </ListItem>
+            <ListItem button component={Link} to="/contact">
+              <ListItemText primary="Contact" />
+            </ListItem>
+          </List>
         </Box>
-      </Toolbar>
-    </AppBar>
+      </Drawer>
+    </>
   );
 }
 

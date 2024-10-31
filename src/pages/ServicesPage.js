@@ -1,38 +1,41 @@
 import React from 'react';
-import { Container, Typography, Grid, Box, Card, CardContent, CardMedia } from '@mui/material';
+import { Container, Typography, Grid, Card, CardContent, CardMedia , Box} from '@mui/material';
 import { styled } from '@mui/system';
-import services from '../services';  // Assume services data is imported
-import backgroundImage from '../assets/books-background.jpg';  // Importing background image
+import { Link } from 'react-router-dom';
+import services from '../services'; 
+import backgroundImage from '../assets/books-background.jpg';
+import { CardActionArea } from '@mui/material';
+const colors = {
+  primary: '#a04722',
+  accent: '#FFC107',
+};
 
-// Styled Hero Section with background image
-const HeroSection = styled(Box)({
-  backgroundImage: `url(${backgroundImage})`,  // Set background image
+// Hero Section
+const HeroSection = styled(Box)(({ theme }) => ({
+  backgroundImage: `url(${backgroundImage})`,
   backgroundSize: 'cover',
   backgroundPosition: 'center',
-  color: '#fff',
+  color: '#ffffff',
   position: 'relative',
-  minHeight: '50vh',  // Minimum height of 50% viewport height
+  minHeight: '50vh',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
-  '&::before': {  // Dark overlay to improve text readability
+  '&::before': {
     content: '""',
     position: 'absolute',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
     top: 0,
     left: 0,
     right: 0,
     bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',  // Dark transparent overlay
-    zIndex: 1,
   },
-});
+}));
 
-// Content overlay to ensure text is above the background
-const ContentOverlay = styled(Container)({
+const ContentOverlay = styled(Container)(({ theme }) => ({
   position: 'relative',
-  zIndex: 2,  // Ensures content appears above overlay
+  zIndex: 2,
   textAlign: 'center',
-});
+}));
 
 function ServicesPage() {
   return (
@@ -50,32 +53,34 @@ function ServicesPage() {
       </HeroSection>
 
       {/* Services Section */}
-      <Container sx={{ py: 8 }}>  {/* Padding around services section */}
+      <Container sx={{ py: 8 }}>
         <Grid container spacing={4}>
           {services.map((service, index) => (
             <Grid item key={index} xs={12} sm={6} md={4}>
               <Card
                 sx={{
-                  height: '100%',  // Full height cards
+                  height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  boxShadow: '0px 6px 15px rgba(0, 0, 0, 0.1)',  // Shadow for depth
+                  boxShadow: '0px 4px 10px rgba(0,0,0,0.1)',
                 }}
               >
-                <CardMedia
-                  component="img"
-                  image={service.image}  // Service image
-                  alt={service.title}
-                  sx={{ height: 200 }}  // Image height
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    {service.title}  {/* Service title */}
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {service.description}  {/* Service description */}
-                  </Typography>
-                </CardContent>
+                <CardActionArea component={Link} to={`/services/${service.slug}`}>
+                  <CardMedia
+                    component="img"
+                    image={service.image}
+                    alt={service.title}
+                    sx={{ height: 200 }}
+                  />
+                  <CardContent>
+                    <Typography gutterBottom variant="h5" component="div" sx={{ color: colors.primary }}>
+                      {service.title}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {service.shortDescription}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
               </Card>
             </Grid>
           ))}
